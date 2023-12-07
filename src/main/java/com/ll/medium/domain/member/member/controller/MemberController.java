@@ -20,19 +20,19 @@ public class MemberController {
 
     @GetMapping("/join")
     public String signup(MemberCreateForm memberCreateForm) {
-        return "join_form";
+        return "domain/member/member/join_form";
     }
 
     @PostMapping("/join")
     public String signup(@Valid MemberCreateForm memberCreateForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "join_form";
+            return "domain/member/member/join_form";
         }
 
         if (!memberCreateForm.getPassword().equals(memberCreateForm.getPasswordConfirm())) {
             bindingResult.rejectValue("passwordConfirm", "passwordInCorrect",
                     "2개의 패스워드가 일치하지 않습니다.");
-            return "join_form";
+            return "domain/member/member/join_form";
         }
 
         memberService.create(memberCreateForm.getUsername(), memberCreateForm.getPasswordConfirm());
