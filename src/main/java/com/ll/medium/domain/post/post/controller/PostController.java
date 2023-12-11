@@ -32,4 +32,9 @@ public class PostController {
         model.addAttribute("post", post);
         return "domain/post/post/post_detail";
     }
+
+    @GetMapping("/write")
+    public String questionCreate() {
+        return "domain/post/post/write_form";
+    }
 }
