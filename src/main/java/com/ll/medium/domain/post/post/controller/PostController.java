@@ -27,7 +27,7 @@ public class PostController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Post> postList = this.postService.getList();
+        List<Post> postList = this.postService.getPublishedList();
         model.addAttribute("postList", postList);
         return "domain/post/post/post_list";
     }
