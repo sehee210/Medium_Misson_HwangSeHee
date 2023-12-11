@@ -45,5 +45,11 @@ public class PostService {
         return postRepository.findByIsPublished(true);
     }
 
-
+    public void modify(Post post, String title, String body, boolean ispublished) {
+        post.setTitle(title);
+        post.setBody(body);
+        post.setPublished(ispublished);
+        post.setModifyDate(LocalDateTime.now());
+        this.postRepository.save(post);
+    }
 }

@@ -8,11 +8,13 @@ import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.domain.post.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -55,4 +57,33 @@ public class PostController {
         this.postService.create(postForm.getTitle(), postForm.getBody(), isPublished, author);
         return "redirect:/post/list"; // 게시글 저장 후 다시 목록으로 이동
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/modify")
+    public String postModify(PostForm postForm, @PathVariable("id") Integer id, Principal principal) {
+        Post post = this.postService.getPost(id);
+        if(!post.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        postForm.setTitle(post.getTitle());
+        postForm.setBody(post.getBody());
+        postForm.setIspublished(post.isPublished());
+        return "domain/post/post/write_form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{id}/modify")
+    public String postModify(@Valid PostForm postForm, BindingResult bindingResult, @RequestParam(value = "isPublished", defaultValue = "false") boolean isPublished,
+                                 Principal principal, @PathVariable("id") Integer id) {
+        if (bindingResult.hasErrors()) {
+            return "write_form";
+        }
+        Post post = this.postService.getPost(id);
+        if (!post.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        this.postService.modify(post, postForm.getTitle(), postForm.getBody(), isPublished);
+        return String.format("redirect:/post/%s", id);
+    }
+
 }
