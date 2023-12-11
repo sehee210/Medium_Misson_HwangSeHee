@@ -56,4 +56,12 @@ public class PostService {
     public void delete(Post post) {
         this.postRepository.delete(post);
     }
+
+    public List<Post> getLatestPublishedPosts() {
+        // 최신순으로 정렬된 공개된 게시글 중 최신 30개 가져오기
+        List<Post> latestPublishedPosts = postRepository.findTop30ByIsPublishedOrderByCreateDateDesc(true);
+
+        return latestPublishedPosts;
+    }
+
 }
