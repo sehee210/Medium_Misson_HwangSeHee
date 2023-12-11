@@ -13,6 +13,12 @@
                     <div th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
+            <div class="my-3">
+                <a th:href="@{|/post/${post.id}/modify|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.username}"
+                   th:text="수정"></a>
+            </div>
         </div>
     </div>
 </div>
