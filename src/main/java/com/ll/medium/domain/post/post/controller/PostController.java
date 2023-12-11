@@ -8,6 +8,7 @@ import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.domain.post.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,11 +39,13 @@ public class PostController {
         return "domain/post/post/post_detail";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
     public String postWrite(PostForm postForm) {
         return "domain/post/post/write_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
     public String postWrite(@Valid PostForm postForm, BindingResult bindingResult, @RequestParam(value = "isPublished", defaultValue = "false") boolean isPublished, Principal principal) {
         if (bindingResult.hasErrors()) {
