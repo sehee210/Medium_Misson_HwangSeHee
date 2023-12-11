@@ -1,11 +1,13 @@
 package com.ll.medium.domain.post.post.service;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.global.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,5 +28,15 @@ public class PostService {
         } else {
             throw new DataNotFoundException("post not found");
         }
+    }
+
+    public void create(String title, String body, boolean isPublished, Member author) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setBody(body);
+        post.setCreateDate(LocalDateTime.now());
+        post.setPublished(isPublished);
+        post.setAuthor(author);
+        this.postRepository.save(post);
     }
 }

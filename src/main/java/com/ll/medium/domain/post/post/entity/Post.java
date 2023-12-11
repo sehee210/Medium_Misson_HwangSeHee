@@ -27,4 +27,6 @@ public class Post {
 
     @ManyToOne
     private Member author;
+
+    private boolean isPublished;
 }
