@@ -7,8 +7,10 @@
     </thead>
     <tbody>
     <tr th:each="post : ${postList}">
-        <td th:text="${post.title}"></td>
-        <td th:text="${question.createDate}"></td>
+        <td>
+            <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
+        </td>
+        <td th:text="${post.createDate}"></td>
     </tr>
     </tbody>
 </table>
