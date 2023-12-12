@@ -82,4 +82,9 @@ public class PostService {
     public List<Post> getidPublishedList(String userId) {
         return this.postRepository.findByAuthorUsernameAndIsPublished(userId, true);
     }
+
+    public void like(Post post, Member member) {
+        post.getLike().add(member);
+        this.postRepository.save(post);
+    }
 }

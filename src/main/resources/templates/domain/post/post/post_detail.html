@@ -17,7 +17,7 @@
                 <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
                    th:data-uri="@{|/post/${post.id}/like|}">
                     추천
-                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(post.like)}"></span>
                 </a>
                 <a th:href="@{|/post/${post.id}/modify|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"

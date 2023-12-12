@@ -98,4 +98,12 @@ public class PostController {
         return "redirect:/post/list";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/like")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
+        Post post = this.postService.getPost(id);
+        Member member = this.memberService.getMember(principal.getName());
+        this.postService.like(post, member);
+        return String.format("redirect:/post/%s", id);
+    }
 }
