@@ -8,6 +8,7 @@ import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.domain.post.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,9 @@ public class PostController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Post> postList = this.postService.getPublishedList();
-        model.addAttribute("postList", postList);
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        Page<Post> paging = this.postService.getPaging(page);
+        model.addAttribute("paging", paging);
         return "domain/post/post/post_list";
     }
 
