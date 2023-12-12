@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,4 +30,7 @@ public class Post {
     private Member author;
 
     private boolean isPublished;
+
+    @ManyToMany
+    Set<Member> like;
 }
