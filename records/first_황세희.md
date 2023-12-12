@@ -36,29 +36,29 @@
 
 #### 엔드 포인트
 홈
-- [ ] GET / : 홈
-    - [ ] 최신글 30개 노출
+- [x] GET / : 홈
+    - [x] 최신글 30개 노출
 
 글 목록 조회
-- [ ] GET /post/list : 전체 글 리스트
-    - [ ] 공개된 글만 노출
+- [x] GET /post/list : 전체 글 리스트
+    - [x] 공개된 글만 노출
 
 내 글 목록 조회
-- [ ] GET /post/myList : 내 글 리스트
+- [x] GET /post/myList : 내 글 리스트
 
 글 상세내용 조회
-- [ ] GET /post/1 : 1번 글 상세보기
+- [x] GET /post/1 : 1번 글 상세보기
 
 글 작성
-- [ ] GET /post/write : 글 작성 폼
-- [ ] POST /post/write : 글 작성 처리
+- [x] GET /post/write : 글 작성 폼
+- [x] POST /post/write : 글 작성 처리
 
 글 수정
-- [ ] GET /post/1/modify : 1번 글 수정 폼
-- [ ] PUT /post/1/modify : 1번 글 수정 폼 처리
+- [x] GET /post/1/modify : 1번 글 수정 폼
+- [x] PUT /post/1/modify : 1번 글 수정 폼 처리
 
 글 삭제
-- [ ] DELETE /post/1/delete : 1번 글 삭제
+- [x] DELETE /post/1/delete : 1번 글 삭제
 
 특정 회원의 글 모아보기
 - [ ] GET /b/user1 : 회원 user1 의 전체 글 리스트
@@ -66,15 +66,15 @@
 
 ### 폼
 글 쓰기 폼
-- [ ] title
-- [ ] body
-- [ ] isPublished
-    - [ ] 체크박스
-    - [ ] value="true"
+- [x] title
+- [x] body
+- [x] isPublished
+    - [x] 체크박스
+    - [x] value="true"
 
 글 수정 폼
-- [ ] title
-- [ ] body
-- [ ] isPublished
-    - [ ] 체크박스
-    - [ ] value="true"
+- [x] title
+- [x] body
+- [x] isPublished
+    - [x] 체크박스
+    - [x] value="true"
