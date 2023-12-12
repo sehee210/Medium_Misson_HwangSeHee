@@ -26,4 +26,11 @@ public class BlogController {
         model.addAttribute("postList", postList);
         return "domain/post/post/blog_list";
     }
+
+    @GetMapping("/{userid}/{postid}")
+    public String list(Model model, @PathVariable("userid") String userid, @PathVariable("postid") Integer postid) {
+        Post post = this.postService.getPost(postid);
+        model.addAttribute("post", post);
+        return "domain/post/post/post_detail";
+    }
 }
