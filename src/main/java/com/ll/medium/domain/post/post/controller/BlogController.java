@@ -21,9 +21,9 @@ public class BlogController {
     private final PostService postService;
 
     @GetMapping("/{userid}")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @PathVariable("userid") String userid) {
-        Page<Post> paging = this.postService.getidPublishedList(userid, page);
-        model.addAttribute("paging", paging);
-        return "domain/post/post/post_list";
+    public String list(Model model, @PathVariable("userid") String userid) {
+        List<Post> postList = this.postService.getidPublishedList(userid);
+        model.addAttribute("postList", postList);
+        return "domain/post/post/blog_list";
     }
 }
