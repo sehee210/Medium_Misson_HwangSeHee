@@ -77,4 +77,12 @@ public class PostService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.postRepository.findByIsPublishedTrue(pageable);
     }
+
+    //BlogController에서 사용
+    public Page<Post> getidPublishedList(String userId, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.postRepository.findByAuthorUsernameAndIsPublished(userId, true, pageable);
+    }
 }
