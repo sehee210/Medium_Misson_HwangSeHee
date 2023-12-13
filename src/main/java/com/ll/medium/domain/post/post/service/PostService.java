@@ -4,6 +4,7 @@ import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.global.exception.DataNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -98,6 +99,18 @@ public class PostService {
             return post;
         } else {
             throw new DataNotFoundException("question not found");
+        }
+    }
+
+    @Transactional
+    public void increaseHit(Integer postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+
+        if (post != null) {
+            post.setHit(post.getHit() + 1);
+            postRepository.save(post);
+        } else {
+            throw new EntityNotFoundException("Post not found with id: " + postId);
         }
     }
 }

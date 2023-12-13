@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -105,5 +106,11 @@ public class PostController {
         Member member = this.memberService.getMember(principal.getName());
         this.postService.like(post, member);
         return String.format("redirect:/post/%s", id);
+    }
+
+    @GetMapping("/{postId}/increaseHit")
+    public ResponseEntity<String> increaseHit(@PathVariable("postId") Integer postId) {
+        this.postService.increaseHit(postId);
+        return ResponseEntity.ok("조회수가 증가되었습니다.");
     }
 }
