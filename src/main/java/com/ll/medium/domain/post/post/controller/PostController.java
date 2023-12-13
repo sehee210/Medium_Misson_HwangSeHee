@@ -37,7 +37,7 @@ public class PostController {
 
     @GetMapping(value = "/{id}")
     public String detail(Model model, @PathVariable("id") Integer id) {
-        Post post = this.postService.getPost(id);
+        Post post = this.postService.hitPost(id);
         model.addAttribute("post", post);
         return "domain/post/post/post_detail";
     }

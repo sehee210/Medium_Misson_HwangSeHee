@@ -4,6 +4,7 @@ import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.global.exception.DataNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -86,5 +87,17 @@ public class PostService {
     public void like(Post post, Member member) {
         post.getLike().add(member);
         this.postRepository.save(post);
+    }
+
+    @Transactional
+    public Post hitPost(Integer id) {
+        Optional<Post> hPost = this.postRepository.findById(id);
+        if (hPost.isPresent()) {
+            Post post = hPost.get();
+            post.setHit(post.getHit() + 1);
+            return post;
+        } else {
+            throw new DataNotFoundException("question not found");
+        }
     }
 }
