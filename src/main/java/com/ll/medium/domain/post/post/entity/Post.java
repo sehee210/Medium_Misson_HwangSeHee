@@ -33,4 +33,6 @@ public class Post {
 
     @ManyToMany
     Set<Member> like;
+
+    private Integer hit;
 }
