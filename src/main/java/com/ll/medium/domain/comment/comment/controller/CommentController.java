@@ -51,4 +51,19 @@ public class CommentController {
         commentForm.setBody(comment.getBody());
         return "domain/comment/comment/comment_form";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{postId}/comment/{commentId}/modify")
+    public String answerModify(@Valid CommentForm commentForm, BindingResult bindingResult,
+                               @PathVariable("postId") Integer postId, @PathVariable("commentId") Integer commentId, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "comment_form";
+        }
+        Comment comment = this.commentService.getComment(commentId);
+        if (!comment.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        this.commentService.modify(comment, commentForm.getBody());
+        return String.format("redirect:/post/%s#answer_%s", comment.getPost().getId(), comment.getId());
+    }
 }
