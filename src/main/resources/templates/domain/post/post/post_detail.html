@@ -37,6 +37,16 @@
             </div>
         </div>
     </div>
+    <h5 th:text="|${#lists.size(post.commentList)}개의 댓글이 있습니다.|"></h5>
+    <div>
+        <ul>
+            <li th:each="comment : ${post.commentList}" th:text="${comment.body}"></li>
+        </ul>
+    </div>
+    <form th:action="@{|${post.id}/comment/write|}" method="post">
+        <textarea name="body" id="body" rows="15"></textarea>
+        <input type="submit" value="댓글 등록">
+    </form>
 </div>
 <script layout:fragment="script" type='text/javascript'>
     const delete_elements = document.getElementsByClassName("delete");
