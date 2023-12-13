@@ -113,4 +113,10 @@ public class PostService {
             throw new EntityNotFoundException("Post not found with id: " + postId);
         }
     }
+
+    public void cancellike(Post post, Member member) {
+        post.getLike().remove(member);
+        this.postRepository.save(post);
+    }
+
 }

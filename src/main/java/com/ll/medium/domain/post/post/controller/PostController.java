@@ -113,4 +113,14 @@ public class PostController {
         this.postService.increaseHit(postId);
         return ResponseEntity.ok("조회수가 증가되었습니다.");
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/canCellike")
+    public String postModify(Principal principal, @PathVariable("id") Integer id) {
+        Post post = this.postService.getPost(id);
+        Member member = this.memberService.getMember(principal.getName());
+        this.postService.cancellike(post, member);
+        return String.format("redirect:/post/%s", id);
+    }
+
 }
