@@ -1,11 +1,13 @@
 package com.ll.medium.domain.post.post.entity;
 
+import com.ll.medium.domain.comment.comment.entity.Comment;
 import com.ll.medium.domain.member.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,4 +37,7 @@ public class Post {
     Set<Member> like;
 
     private Integer hit;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList;
 }
