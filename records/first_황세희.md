@@ -78,3 +78,46 @@
 - [x] isPublished
     - [x] 체크박스
     - [x] value="true"
+
+---
+
+### 선택미션 1 : 조회수
+
+#### 조회수 증가
+- [ ] POST /post/5/increaseHit : 5번글에 대한 조회수 증가
+  - [x] GET 방식으로 구현
+
+---
+
+### 선택미션 2 : 추천
+
+#### 추천
+- [ ] POST /post/5/like : 5번글을 추천
+  - [x] GET 방식으로 구현
+- [ ] DELETE /post/5/canCellike : 5번글을 추천취소
+  - [x] GET 방식으로 구현
+
+---
+
+### 선택미션 3 : 댓글
+댓글 목록
+- [ ] 글 상세페이지 하단 : 5번글에 대한 댓글 목록
+
+댓글 작성
+- [ ] 글 상세페이지 하단 : 5번글에 대한 댓글 작성 폼
+- [ ] POST /post/5/comment/write : 5번글에 대한 댓글 작성 폼 처리
+
+댓글 수정
+- [ ] GET /post/5/comment/6/modify : 5번글에 대한 6번 댓글 수점 폼
+- [ ] POST /post/5/comment/6/modify : 5번글에 대한 6번 댓글 수점 폼 처리
+
+댓글 삭제
+- [ ] DELETE /post/5/comment/6/delete : 5번글에 대한 6번 댓글 삭제
+
+
+### 폼
+댓글 작성 폼
+- [ ] body
+
+댓글 수정 폼
+- [ ] body
