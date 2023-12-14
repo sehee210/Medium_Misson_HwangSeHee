@@ -7,6 +7,7 @@ import com.ll.medium.domain.post.post.dto.PostForm;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.domain.post.post.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -107,21 +110,17 @@ public class PostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}/canCellike")
-    public String postModify(Principal principal, @PathVariable("id") Integer id) {
-        Post post = this.postService.getPost(id);
+    @PostMapping("/{postId}/like")
+    public String like(Principal principal, @PathVariable("postId") Integer postId, Model model) {
+        Post post = this.postService.getPost(postId);
         Member member = this.memberService.getMember(principal.getName());
-        this.postService.cancellike(post, member);
-        return String.format("redirect:/post/%s", id);
-    }
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/{id}/like")
-    public String like(Principal principal, @PathVariable("id") Integer id) {
-        Post post = this.postService.getPost(id);
-        Member member = this.memberService.getMember(principal.getName());
-        this.postService.like(post, member);
-        return String.format("redirect:/post/%s", id);
-    }
+        if (!this.postService.hasLiked(post, member)) {
+            this.postService.like(post, member);
+        } else {
+            this.postService.cancellike(post, member);
+        }
 
+        return String.format("redirect:/post/%s", postId);
+    }
 }

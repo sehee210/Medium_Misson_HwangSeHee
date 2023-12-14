@@ -16,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -47,6 +44,7 @@ public class PostService {
         post.setCreateDate(LocalDateTime.now());
         post.setPublished(isPublished);
         post.setAuthor(author);
+        post.setHit(0);
         this.postRepository.save(post);
     }
 
@@ -119,4 +117,7 @@ public class PostService {
         this.postRepository.save(post);
     }
 
+    public boolean hasLiked(Post post, Member member) {
+        return postRepository.existsByLikeContainsAndAuthor(member, post.getAuthor());
+    }
 }

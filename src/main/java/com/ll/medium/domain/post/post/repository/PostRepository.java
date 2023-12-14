@@ -1,5 +1,6 @@
 package com.ll.medium.domain.post.post.repository;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Page<Post> findByIsPublishedTrue(Pageable pageable);
 
     List<Post> findByAuthorUsernameAndIsPublished(String username, boolean isPublished);
+
+    boolean existsByLikeContainsAndAuthor(Member like, Member author);
 }

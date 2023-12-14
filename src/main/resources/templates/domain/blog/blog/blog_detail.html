@@ -25,24 +25,6 @@
                 </div>
             </div>
             <div class="my-3">
-                <!-- 첫 번째 폼: 이미 추천이 되어 있는 경우 비활성화 -->
-                <form th:action="@{|/post/${post.id}/like|}" method="post" th:unless="${postLiked}">
-                    <!-- CSRF 토큰 자동 추가 -->
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="recommend btn btn-sm btn-outline-secondary">
-                        추천
-                        <span class="badge rounded-pill bg-success" th:text="${#lists.size(post.like)}"></span>
-                    </button>
-                </form>
-                <!-- 두 번째 폼: 아직 추천이 안 된 경우 비활성화 -->
-                <form th:action="@{|/post/${post.id}/cancellike|}" method="post" th:if="${postLiked}">
-                    <!-- CSRF 토큰 자동 추가 -->
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="recommend btn btn-sm btn-outline-secondary">
-                        추천 취소
-                        <span class="badge rounded-pill bg-success" th:text="${#lists.size(post.like)}"></span>
-                    </button>
-                </form>
                 <a th:href="@{|/post/${post.id}/modify|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.username}"
