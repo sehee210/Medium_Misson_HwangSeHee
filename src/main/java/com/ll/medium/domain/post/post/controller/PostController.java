@@ -100,15 +100,6 @@ public class PostController {
         return "redirect:/post/list";
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}/like")
-    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
-        Post post = this.postService.getPost(id);
-        Member member = this.memberService.getMember(principal.getName());
-        this.postService.like(post, member);
-        return String.format("redirect:/post/%s", id);
-    }
-
     @GetMapping("/{postId}/increaseHit")
     public ResponseEntity<String> increaseHit(@PathVariable("postId") Integer postId) {
         this.postService.increaseHit(postId);
@@ -121,6 +112,15 @@ public class PostController {
         Post post = this.postService.getPost(id);
         Member member = this.memberService.getMember(principal.getName());
         this.postService.cancellike(post, member);
+        return String.format("redirect:/post/%s", id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{id}/like")
+    public String like(Principal principal, @PathVariable("id") Integer id) {
+        Post post = this.postService.getPost(id);
+        Member member = this.memberService.getMember(principal.getName());
+        this.postService.like(post, member);
         return String.format("redirect:/post/%s", id);
     }
 
