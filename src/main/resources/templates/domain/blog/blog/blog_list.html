@@ -13,7 +13,7 @@
         <tr class="text-center" th:each="post, loop : ${postList}">
             <td th:text="${loop.count}"></td>
             <td class="text-start">
-                <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
+                <a th:href="@{/b/{userId}/{postId}(userId=${#authentication.name}, postId=${post.id})}" th:text="${post.title}"></a>
                 <span class="text-danger small ms-2"
                       th:if="${#lists.size(post.commentList) > 0}"
                       th:text="${#lists.size(post.commentList)}">
@@ -24,5 +24,6 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/post/write}" class="btn btn-primary">게시글 등록하기</a>
 </div>
 </html>
