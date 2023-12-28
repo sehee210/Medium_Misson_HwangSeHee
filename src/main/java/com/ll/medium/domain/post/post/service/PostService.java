@@ -120,4 +120,9 @@ public class PostService {
     public boolean hasLiked(Post post, Member member) {
         return postRepository.existsByLikeContainsAndAuthor(member, post.getAuthor());
     }
+
+    public boolean isPaidPost(Integer postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        return post != null && post.isIspaid();
+    }
 }
