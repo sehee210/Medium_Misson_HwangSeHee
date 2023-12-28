@@ -37,3 +37,7 @@ custom:
   tempDirPath: c:/temp/medium_dev/temp
   genFile:
     dirPath: c:/temp/medium_dev
+server:
+  error:
+    whitelabel:
+      enabled: false
