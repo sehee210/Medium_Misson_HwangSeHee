@@ -45,6 +45,7 @@ public class PostService {
         post.setPublished(isPublished);
         post.setAuthor(author);
         post.setHit(0);
+        post.setIspaid(true);
         this.postRepository.save(post);
     }
 

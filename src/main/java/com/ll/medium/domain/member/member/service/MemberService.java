@@ -41,4 +41,9 @@ public class MemberService {
         this.memberRepository.save(member);
         return member;
     }
+
+    public Member getMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + memberId));
+    }
 }
