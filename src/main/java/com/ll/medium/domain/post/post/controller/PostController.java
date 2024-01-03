@@ -38,8 +38,9 @@ public class PostController {
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Post> paging = this.postService.getPaging(page, kw);
+                       @RequestParam(value = "kw", defaultValue = "") String kw,
+                       @RequestParam(name = "sortCode", defaultValue = "idDesc") String sortCode) {
+        Page<Post> paging = this.postService.getPaging(page, kw, sortCode);
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         return "domain/post/post/post_list";

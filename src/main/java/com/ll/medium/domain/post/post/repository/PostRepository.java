@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PostRepository extends JpaRepository<Post, Integer>, PostRepositoryCustom {
     List<Post> findByIsPublished(boolean isPublished);
 
     List<Post> findTop30ByIsPublishedOrderByCreateDateDesc(boolean isPublished);

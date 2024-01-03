@@ -75,8 +75,28 @@ public class PostService {
         return latestPublishedPosts;
     }
 
-    public Page<Post> getPaging(int page, String kw) {
+    public Page<Post> getPaging(int page, String kw, String sortCode) {
         List<Sort.Order> sorts = new ArrayList<>();
+
+        switch (sortCode) {
+            case "idDesc":
+                sorts.add(Sort.Order.desc("id"));
+                break;
+            case "idAsc":
+                sorts.add(Sort.Order.asc("id"));
+                break;
+            case "hitDesc":
+                sorts.add(Sort.Order.desc("hit"));
+                break;
+            case "likeAsc":
+                sorts.add(Sort.Order.asc("like"));
+                break;
+            default:
+                // 기본은 id 내림차순
+                sorts.add(Sort.Order.desc("id"));
+                break;
+        }
+
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.postRepository.findAllByKeyword(kw, pageable);
