@@ -40,4 +40,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean ispaid;
 }

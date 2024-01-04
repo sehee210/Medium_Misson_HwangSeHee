@@ -17,4 +17,7 @@ public class Member {
     private String username;
 
     private String password;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean ispaid;
 }
