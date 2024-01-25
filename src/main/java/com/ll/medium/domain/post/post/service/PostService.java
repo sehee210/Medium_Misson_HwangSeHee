@@ -1,16 +1,19 @@
 package com.ll.medium.domain.post.post.service;
 
+import com.ll.medium.domain.comment.comment.entity.Comment;
 import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
 import com.ll.medium.global.exception.DataNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -45,6 +48,7 @@ public class PostService {
         post.setPublished(isPublished);
         post.setAuthor(author);
         post.setHit(0);
+        post.setIspaid(true);
         this.postRepository.save(post);
     }
 
@@ -71,11 +75,31 @@ public class PostService {
         return latestPublishedPosts;
     }
 
-    public Page<Post> getPaging(int page) {
+    public Page<Post> getPaging(int page, String kw, String sortCode) {
         List<Sort.Order> sorts = new ArrayList<>();
+
+        switch (sortCode) {
+            case "idDesc":
+                sorts.add(Sort.Order.desc("id"));
+                break;
+            case "idAsc":
+                sorts.add(Sort.Order.asc("id"));
+                break;
+            case "hitDesc":
+                sorts.add(Sort.Order.desc("hit"));
+                break;
+            case "likeAsc":
+                sorts.add(Sort.Order.asc("like"));
+                break;
+            default:
+                // 기본은 id 내림차순
+                sorts.add(Sort.Order.desc("id"));
+                break;
+        }
+
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.postRepository.findByIsPublishedTrue(pageable);
+        return this.postRepository.findAllByKeyword(kw, pageable);
     }
 
     //BlogController에서 사용
@@ -119,5 +143,14 @@ public class PostService {
 
     public boolean hasLiked(Post post, Member member) {
         return postRepository.existsByLikeContainsAndAuthor(member, post.getAuthor());
+    }
+
+    public boolean isPaidPost(Integer postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        return post != null && post.isIspaid();
+    }
+
+    public Page<Post> search(List<String> kwTypes, String kw, Pageable pageable) {
+        return postRepository.search(kwTypes, kw, pageable);
     }
 }

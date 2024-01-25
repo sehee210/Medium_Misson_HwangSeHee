@@ -32,4 +32,18 @@ public class MemberService {
             throw new DataNotFoundException("username not found");
         }
     }
+
+    public Member create_test(String username, String password, boolean ispaid) {
+        Member member = new Member();
+        member.setUsername(username);
+        member.setPassword(passwordEncoder.encode(password));
+        member.setIspaid(ispaid);
+        this.memberRepository.save(member);
+        return member;
+    }
+
+    public Member getMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + memberId));
+    }
 }
