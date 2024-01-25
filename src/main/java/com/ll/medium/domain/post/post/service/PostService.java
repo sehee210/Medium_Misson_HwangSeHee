@@ -150,16 +150,7 @@ public class PostService {
         return post != null && post.isIspaid();
     }
 
-    private Specification<Post> search(String kw) {
-        return new Specification<Post>() {
-            @Override
-            public Predicate toPredicate(Root<Post> p, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);
-                Join<Post, Member> u1 = p.join("author", JoinType.LEFT);
-                return cb.or(cb.like(p.get("title"), "%" + kw + "%"), // 제목
-                        cb.like(p.get("body"), "%" + kw + "%"),      // 내용
-                        cb.like(u1.get("username"), "%" + kw + "%"));    // 질문 작성자
-            }
-        };
+    public Page<Post> search(List<String> kwTypes, String kw, Pageable pageable) {
+        return postRepository.search(kwTypes, kw, pageable);
     }
 }

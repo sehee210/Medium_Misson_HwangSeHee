@@ -69,7 +69,8 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
-    public String postWrite(@Valid PostForm postForm, BindingResult bindingResult, @RequestParam(value = "isPublished", defaultValue = "false") boolean isPublished, Principal principal) {
+    public String postWrite(@Valid PostForm postForm, BindingResult bindingResult,
+                            @RequestParam(value = "isPublished", defaultValue = "false") boolean isPublished, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "domain/post/post/write_form";
         }
